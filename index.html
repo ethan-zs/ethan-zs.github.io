@@ -3,41 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王子石 - 简历</title>
+    <title>Ethan - CV</title>
+    
     <style>
+        /* ========== CSS变量与设计系统 ========== */
         :root {
+            /* 颜色系统 - 浅色模式（默认） */
             --bg-color: #f0f4f8;
             --card-bg: #ffffff;
             --text-primary: #1e3a5f;
             --text-secondary: #4a6fa5;
+            --text-muted: #6b7280;
             --accent-blue: #0969da;
             --border-color: #d0d7de;
             --sidebar-bg: #1e3a5f;
-            --progress-bg: #e1e4e8;
             --sidebar-text: #ffffff;
             --sidebar-text-muted: #a8c5e2;
+            --sidebar-link: #7cb3e0;
+            --tech-tag-bg: #2a4a6f;
+            --tech-tag-color: #a8c5e2;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --radius: 8px;
         }
+
+        /* 深色模式变量 */
         body.dark {
-    --bg-color: #0d1117;
-    --card-bg: #161b22;
-    --text-primary: #e6edf3;
-    --text-secondary: #8b949e;
-    --border-color: #30363d;
-    --sidebar-bg: #161b22;
-    --sidebar-text: #e6edf3;
-    --sidebar-text-muted: #8b949e;
-    --progress-bg: #21262d;
-}
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #7d8590;
+            --border-color: #30363d;
+            --sidebar-bg: #161b22;
+            --sidebar-text: #e6edf3;
+            --sidebar-text-muted: #8b949e;
+            --sidebar-link: #58a6ff;
+            --tech-tag-bg: #21262d;
+            --tech-tag-color: #8b949e;
+            --shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
 
-body.dark .tech-tag {
-    background: #21262d;
-    color: #8b949e;
-}
-
-body.dark .wechat-section {
-    border-top-color: #30363d;
-}
-
+        /* ========== 基础重置与工具类 ========== */
         * {
             margin: 0;
             padding: 0;
@@ -49,26 +55,58 @@ body.dark .wechat-section {
             background-color: var(--bg-color);
             color: var(--text-primary);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 999;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* 隐藏SVG Sprite */
+        .svg-sprite {
+            display: none;
+        }
+
+        /* ========== 布局系统 ========== */
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 0 60px;
             display: grid;
             grid-template-columns: 320px 1fr;
             gap: 24px;
         }
 
-        /* Sidebar Styles */
+        /* ========== 侧边栏组件 ========== */
         .sidebar {
             background: var(--sidebar-bg);
-            border: 1px solid var(--sidebar-bg);
-            border-radius: 6px;
+            border-radius: var(--radius);
             padding: 24px;
             height: fit-content;
             position: sticky;
             top: 20px;
+            color: var(--sidebar-text);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
         }
 
         .profile-header {
@@ -80,24 +118,35 @@ body.dark .wechat-section {
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: none;
             object-fit: cover;
             margin-bottom: 16px;
+            border: 4px solid rgba(255,255,255,0.1);
+            background-color: var(--tech-tag-bg);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .profile-header h1 {
+        .profile-name {
             font-size: 24px;
             font-weight: 600;
+            margin-bottom: 4px;
             color: var(--sidebar-text);
-            margin-bottom: 8px;
         }
 
-        .role {
-            display: none;
+        .profile-name-en {
+            color: var(--sidebar-text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight: 400;
         }
 
         .section {
             margin-bottom: 24px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
         }
 
         .section-title {
@@ -110,17 +159,18 @@ body.dark .wechat-section {
             gap: 8px;
         }
 
-        .section-title svg {
+        .section-icon {
             width: 18px;
             height: 18px;
             color: var(--sidebar-text-muted);
+            flex-shrink: 0;
         }
 
         .contact-list {
             list-style: none;
         }
 
-        .contact-list li {
+        .contact-item {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -129,23 +179,26 @@ body.dark .wechat-section {
             color: var(--sidebar-text-muted);
         }
 
-        .contact-list svg {
+        .contact-icon {
             width: 16px;
             height: 16px;
             color: var(--sidebar-text-muted);
             flex-shrink: 0;
         }
 
-        .contact-list a {
-            color: #7cb3e0;
+        .contact-link {
+            color: var(--sidebar-link);
             text-decoration: none;
+            transition: opacity 0.2s;
+            word-break: break-all;
         }
 
-        .contact-list a:hover {
+        .contact-link:hover {
+            opacity: 0.8;
             text-decoration: underline;
         }
 
-        /* Sidebar Education */
+        /* 侧边栏教育背景 */
         .sidebar-education {
             color: var(--sidebar-text-muted);
         }
@@ -175,7 +228,7 @@ body.dark .wechat-section {
             opacity: 0.7;
         }
 
-        /* Tech Stack Tags */
+        /* 技术标签 */
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
@@ -183,38 +236,38 @@ body.dark .wechat-section {
         }
 
         .tech-tag {
-            background: #2a4a6f;
-            color: #a8c5e2;
+            background: var(--tech-tag-bg);
+            color: var(--tech-tag-color);
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
+            transition: transform 0.2s;
+            border: 1px solid transparent;
         }
 
-        /* WeChat QR */
+        .tech-tag:hover {
+            transform: translateY(-1px);
+            border-color: var(--sidebar-text-muted);
+        }
+
+        /* 微信二维码区域 */
         .wechat-section {
             text-align: center;
             padding-top: 16px;
-            border-top: 1px solid #3d5a80;
-        }
-
-        .wechat-section .section-title {
-            justify-content: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .qr-code {
             width: 140px;
             height: 140px;
-            border-radius: 8px;
-            border: 2px solid #3d7ab9;
+            border-radius: var(--radius);
+            border: 2px solid var(--tech-tag-bg);
             object-fit: cover;
+            background-color: white;
         }
 
-        .qr-label {
-            display: none;
-        }
-
-        /* Main Content Styles */
+        /* ========== 主内容区组件 ========== */
         .main-content {
             display: flex;
             flex-direction: column;
@@ -224,8 +277,10 @@ body.dark .wechat-section {
         .content-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: var(--radius);
             padding: 24px;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
         }
 
         .content-section {
@@ -245,15 +300,16 @@ body.dark .wechat-section {
             display: flex;
             align-items: center;
             gap: 10px;
+            color: var(--text-primary);
         }
 
-        .section-header svg {
+        .section-header-icon {
             width: 20px;
             height: 20px;
             color: var(--text-secondary);
         }
 
-        /* Education */
+        /* 教育背景 */
         .education-item {
             margin-bottom: 20px;
         }
@@ -266,17 +322,21 @@ body.dark .wechat-section {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .school-name {
             font-weight: 600;
             font-size: 16px;
+            color: var(--text-primary);
         }
 
         .education-date {
             color: var(--text-secondary);
             font-size: 13px;
+            font-weight: 500;
         }
 
         .degree {
@@ -285,7 +345,7 @@ body.dark .wechat-section {
             margin-bottom: 4px;
         }
 
-        /* Experience Timeline */
+        /* 工作经历时间线 */
         .timeline-item {
             margin-bottom: 24px;
         }
@@ -300,6 +360,7 @@ body.dark .wechat-section {
             align-items: baseline;
             margin-bottom: 8px;
             flex-wrap: wrap;
+            gap: 8px;
         }
 
         .company-name {
@@ -311,12 +372,14 @@ body.dark .wechat-section {
         .timeline-date {
             color: var(--text-secondary);
             font-size: 13px;
+            font-weight: 500;
         }
 
         .job-title {
             color: var(--text-secondary);
             font-size: 14px;
             margin-bottom: 10px;
+            font-weight: 500;
         }
 
         .job-description {
@@ -325,25 +388,26 @@ body.dark .wechat-section {
             line-height: 1.7;
         }
 
-        .job-description ul {
+        .job-list {
             margin-left: 20px;
             margin-top: 8px;
         }
 
-        .job-description li {
+        .job-list li {
             margin-bottom: 6px;
         }
 
-        /* Academic Activities */
+        /* 学术活动 */
         .academic-item {
             margin-bottom: 20px;
-            padding: 8px;
-            background: none;
-            border-radius: 6px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .academic-item:last-child {
             margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         .academic-header {
@@ -352,16 +416,19 @@ body.dark .wechat-section {
             align-items: baseline;
             margin-bottom: 10px;
             flex-wrap: wrap;
+            gap: 8px;
         }
 
         .academic-title {
             font-weight: 600;
             font-size: 15px;
+            color: var(--text-primary);
         }
 
         .academic-date {
             color: var(--text-secondary);
             font-size: 13px;
+            white-space: nowrap;
         }
 
         .academic-description {
@@ -370,7 +437,7 @@ body.dark .wechat-section {
             line-height: 1.7;
         }
 
-        /* Skills Description */
+        /* 技能描述 */
         .skills-text {
             color: var(--text-secondary);
             font-size: 14px;
@@ -385,21 +452,32 @@ body.dark .wechat-section {
             margin-bottom: 0;
         }
 
-        /* Responsive Design */
+        /* ========== 响应式设计 ========== */
         @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 20px auto;
+                padding: 0 20px;
             }
 
             .sidebar {
                 position: static;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .avatar {
+                width: 150px;
+                height: 150px;
             }
         }
 
         @media (max-width: 600px) {
             .container {
-                margin: 20px auto;
+                margin: 10px auto;
                 padding: 0 12px;
+                gap: 16px;
             }
 
             .content-card, .sidebar {
@@ -411,62 +489,126 @@ body.dark .wechat-section {
                 height: 120px;
             }
 
-            .timeline-header {
-                flex-direction: column;
+            .qr-code {
+                width: 120px;
+                height: 120px;
             }
 
-            .education-header {
+            .section-header {
+                font-size: 16px;
+            }
+
+            .timeline-header,
+            .education-header,
+            .academic-header {
                 flex-direction: column;
+                gap: 4px;
+            }
+
+            .company-name,
+            .school-name,
+            .academic-title {
+                font-size: 15px;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 10px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
-<body class="dark">
-    <button id="darkToggle"
-  style="position:fixed; top:16px; right:16px; background:none; border:none; font-size:22px; cursor:pointer; z-index:999;">
-  dark
-    </button>
-    <div class="container">
-        <!-- Left Sidebar -->
-        <aside class="sidebar">
-            <div class="profile-header">
-                <img src="https://i.cetsteam.com/imgs/2026/03/26/d83f1997841ba286.jpg" alt="头像" class="avatar">
-                <h1>王子石</h1>
-                <p style="color: #888888; font-size: 14px; margin-top: 4px;">Ethan Wang</p>
-            </div>
+<body>
+    <!-- SVG图标库 -->
+    <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </symbol>
+        <symbol id="icon-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- 手机外框 -->
+            <rect x="6" y="2" width="12" height="20" rx="2" ry="2"/>
+            <!-- 顶部听筒 -->
+            <line x1="10" y1="6" x2="14" y2="6" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- 屏幕 -->
+            <rect x="7" y="9" width="10" height="8" stroke-width="1" opacity="0.5"/>
+            <!-- 底部Home键 -->
+            <circle cx="12" cy="19" r="1" stroke-width="1.5"/>
+        </symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+        </symbol>
+        <symbol id="icon-education" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </symbol>
+        <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+        </symbol>
+        <symbol id="icon-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </symbol>
+        <symbol id="icon-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </symbol>
+        <symbol id="icon-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </symbol>
+    </svg>
 
-            <!-- Contact Information -->
-            <div class="section">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                    </svg>
+    <!-- 主题切换按钮 -->
+    <button id="themeToggle" class="theme-toggle" aria-label="切换深色/浅色模式" title="切换主题">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" role="complementary" aria-label="个人信息 sidebar">
+            <header class="profile-header">
+                <img src="https://i.cetsteam.com/imgs/2026/03/26/d83f1997841ba286.jpg" 
+                     alt="王子石个人照片" 
+                     class="avatar" 
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <!-- 图片加载失败时的备选首字母头像 -->
+                <div style="width:200px;height:200px;border-radius:50%;background:var(--tech-tag-bg);display:none;align-items:center;justify-content:center;font-size:64px;font-weight:600;color:var(--sidebar-text);margin:0 auto 16px;">
+                    王
+                </div>
+                <h1 class="profile-name">王子石</h1>
+                <p class="profile-name-en" lang="en">Ethan Wang</p>
+            </header>
+
+            <!-- 联系方式 -->
+            <section class="section" aria-labelledby="contact-heading">
+                <h3 id="contact-heading" class="section-title">
+                    <svg class="section-icon"><use href="#icon-phone"/></svg>
                     联系方式
                 </h3>
-                <ul class="contact-list">
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
-                        <span>19945735419</span>
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        <a href="mailto:easonzswang@163.com">easonzswang@163.com</a>
+                <li class="contact-item">
+                    <svg class="contact-icon" style="width: 20px; height: 20px; margin-left: -2.5px;"><use href="#icon-mobile"/></svg>
+                    <span aria-label="手机号码">199-4573-5419</span>
+                </li>
+                    <li class="contact-item">
+                        <svg class="contact-icon"><use href="#icon-mail"/></svg>
+                        <a href="mailto:easonzswang@163.com" class="contact-link" aria-label="发送邮件到 easonzswang@163.com">
+                            easonzswang@163.com
+                        </a>
                     </li>
                 </ul>
-            </div>
+            </section>
 
-            <!-- Sidebar Education -->
-            <div class="section">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                    </svg>
+            <!-- 侧边栏教育背景 -->
+            <section class="section" aria-labelledby="sidebar-edu-heading">
+                <h3 id="sidebar-edu-heading" class="section-title">
+                    <svg class="section-icon"><use href="#icon-education"/></svg>
                     教育背景
                 </h3>
                 <div class="sidebar-education">
@@ -481,90 +623,86 @@ body.dark .wechat-section {
                         <div class="sidebar-date">2020 - 2024</div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Tech Stack -->
-            <div class="section">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="16 18 22 12 16 6"/>
-                        <polyline points="8 6 2 12 8 18"/>
-                    </svg>
+            <!-- 技术栈 -->
+            <section class="section" aria-labelledby="skills-heading">
+                <h3 id="skills-heading" class="section-title">
+                    <svg class="section-icon"><use href="#icon-code"/></svg>
                     技术栈
                 </h3>
-                <div class="tech-tags">
-                    <span class="tech-tag">AI</span>
-                    <span class="tech-tag">Agent</span>
-                    <span class="tech-tag">消费电子</span>
-                    <span class="tech-tag">Robotics</span>
-                    <span class="tech-tag">创客活动</span>
-                    <span class="tech-tag">财务分析</span>
-                    <span class="tech-tag">SQL</span>
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">金融建模</span>
+                <div class="tech-tags" role="list" aria-label="技能标签">
+                    <span class="tech-tag" role="listitem">AI</span>
+                    <span class="tech-tag" role="listitem">Agent</span>
+                    <span class="tech-tag" role="listitem">消费电子</span>
+                    <span class="tech-tag" role="listitem">Robotics</span>
+                    <span class="tech-tag" role="listitem">创客活动</span>
+                    <span class="tech-tag" role="listitem">财务分析</span>
+                    <span class="tech-tag" role="listitem">SQL</span>
+                    <span class="tech-tag" role="listitem">Python</span>
+                    <span class="tech-tag" role="listitem">金融建模</span>
                 </div>
-            </div>
+            </section>
 
-            <!-- WeChat QR -->
-            <div class="wechat-section">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                    </svg>
+            <!-- 微信二维码 -->
+            <section class="section wechat-section" aria-labelledby="wechat-heading">
+                <h3 id="wechat-heading" class="section-title" style="justify-content: center;">
+                    <svg class="section-icon"><use href="#icon-message"/></svg>
                     添加微信
                 </h3>
-                <img src="https://cdn.hailuoai.com/matrix_agent/20260313/image_tool/output/110018_2659/workspace/imgs/wechat_qr_cropped.png" alt="微信二维码" class="qr-code">
-            </div>
+                <img src="https://cdn.hailuoai.com/matrix_agent/20260313/image_tool/output/110018_2659/workspace/imgs/wechat_qr_cropped.png" 
+                     alt="王子石微信二维码" 
+                     class="qr-code"
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML+='<p style=\'color:var(--sidebar-text-muted);font-size:12px;\'>微信号: EthanWang_ZS</p>'">
+            </section>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Education (Main Content) -->
-            <div class="content-card">
-                <div class="content-section">
-                    <h2 class="section-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                        </svg>
+        <!-- 主内容区 -->
+        <main class="main-content" role="main">
+            
+            <!-- 教育背景 -->
+            <article class="content-card" aria-labelledby="edu-heading">
+                <section class="content-section">
+                    <h2 id="edu-heading" class="section-header">
+                        <svg class="section-header-icon"><use href="#icon-education"/></svg>
                         教育背景
                     </h2>
+                    
                     <div class="education-item">
                         <div class="education-header">
                             <span class="school-name">加州大学圣地亚哥分校 (UCSD)</span>
-                            <span class="education-date">2024 - 2026</span>
+                            <time class="education-date" datetime="2024-2026">2024 - 2026</time>
                         </div>
                         <p class="degree">量化金融 · 硕士</p>
                     </div>
+
                     <div class="education-item">
                         <div class="education-header">
                             <span class="school-name">上海财经大学</span>
-                            <span class="education-date">2020 - 2024</span>
+                            <time class="education-date" datetime="2020-2024">2020 - 2024</time>
                         </div>
                         <p class="degree">国际金融 · 本科</p>
                     </div>
-                </div>
-            </div>
+                </section>
+            </article>
 
-            <!-- Work Experience -->
-            <div class="content-card">
-                <div class="content-section">
-                    <h2 class="section-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                        </svg>
+            <!-- 工作经历 -->
+            <article class="content-card" aria-labelledby="exp-heading">
+                <section class="content-section">
+                    <h2 id="exp-heading" class="section-header">
+                        <svg class="section-header-icon"><use href="#icon-briefcase"/></svg>
                         工作经历
                     </h2>
 
-                    <div class="timeline-item">
-                        <div class="timeline-header">
+                    <article class="timeline-item">
+                        <header class="timeline-header">
                             <span class="company-name">今日资本</span>
-                            <span class="timeline-date">2026.3 - 至今</span>
-                        </div>
+                            <time class="timeline-date" datetime="2026-03">2026.3 - 至今</time>
+                        </header>
                         <p class="job-title">投资分析师</p>
                         <div class="job-description">
-                            <ul>
+                            <ul class="job-list">
                                 <li>支持投资团队完成深度due diligence，访谈行业专家和竞对founder</li>
                                 <li>执行早期项目sourcing与初步评估，通过LinkedIn/展会/产业社群等多渠道接触创始团队</li>
                                 <li>AI赛道系统性mapping，建立200+潜在项目数据库，并推动多个项目进入初步尽调阶段</li>
@@ -572,16 +710,16 @@ body.dark .wechat-section {
                                 <li>建立AI竞品监测体系，每周追踪Artificial Analysis、KS、Product Hunt、海外社媒爬取最新数据和动态</li>
                             </ul>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="timeline-item">
-                        <div class="timeline-header">
+                    <article class="timeline-item">
+                        <header class="timeline-header">
                             <span class="company-name">美团</span>
-                            <span class="timeline-date">2024.3 - 2024.7</span>
-                        </div>
+                            <time class="timeline-date" datetime="2024-03/2024-07">2024.3 - 2024.7</time>
+                        </header>
                         <p class="job-title">产品经理</p>
                         <div class="job-description">
-                            <ul>
+                            <ul class="job-list">
                                 <li>利用SQL与数据建模技术，搭建并优化公司金融贷款业务的用户数据资产，支持风险识别与用户画像建设</li>
                                 <li>分析7亿年活用户中的不同用户群体，识别高学历、高收入等优质用户，推动优质客群识别覆盖率从43%提升至50%</li>
                                 <li>参与金融风险建模与KYC数据探索，识别影响用户还款能力和意愿的关键因素，如APP安装行为、手机号更换、突发支出</li>
@@ -589,262 +727,175 @@ body.dark .wechat-section {
                                 <li>深入研究逾期用户案例，通过数据与业务结合方式识别潜在催收"做功点"，提升催回率与用户体验</li>
                             </ul>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="timeline-item">
-                        <div class="timeline-header">
+                    <article class="timeline-item">
+                        <header class="timeline-header">
                             <span class="company-name">红杉中国</span>
-                            <span class="timeline-date">2023.9 - 2024.2</span>
-                        </div>
+                            <time class="timeline-date" datetime="2023-09/2024-02">2023.9 - 2024.2</time>
+                        </header>
                         <p class="job-title">投后管理</p>
                         <div class="job-description">
-                            <ul>
+                            <ul class="job-list">
                                 <li>参与宏观产业政策研究，调研孵化器行业发展趋势与商业模式，撰写投资分析报告及孵化器增长战略建议</li>
                                 <li>分析头部孵化器的运营模式与增长路径，支持团队制定孵化平台的战略方向与投后管理机制</li>
                                 <li>负责红杉上海孵化器的投后管理事务，协助初创企业申请地方产业补贴政策、对接政府落地资源</li>
                                 <li>参与路演活动、创业比赛与初创企业筛选流程，审查项目团队背景、商业模式与财务数据，评估其投资与发展潜力</li>
                             </ul>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="timeline-item">
-                        <div class="timeline-header">
+                    <article class="timeline-item">
+                        <header class="timeline-header">
                             <span class="company-name">华夏基金</span>
-                            <span class="timeline-date">2022.6 - 2022.9</span>
-                        </div>
+                            <time class="timeline-date" datetime="2022-06/2022-09">2022.6 - 2022.9</time>
+                        </header>
                         <p class="job-title">渠道销售</p>
                         <div class="job-description">
-                            <ul>
+                            <ul class="job-list">
                                 <li>协助维护与银行、券商等机构渠道的合作关系，支持日常对接与业务流程顺畅执行</li>
                                 <li>运用金融终端进行数据提取与处理，编制净值日报、收益表现报告，为销售与投资决策提供实时数据支持</li>
                                 <li>参与代销渠道产品准入流程材料准备，包括产品评估表、尽调文件与渠道说明文档</li>
                                 <li>为渠道客户提供基金投资咨询服务，协助匹配产品策略，应用金融模型进行配置建议与绩效跟踪</li>
                             </ul>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="timeline-item">
-                        <div class="timeline-header">
+                    <article class="timeline-item">
+                        <header class="timeline-header">
                             <span class="company-name">华泰证券</span>
-                            <span class="timeline-date">2021.6 - 2021.9</span>
-                        </div>
+                            <time class="timeline-date" datetime="2021-06/2021-09">2021.6 - 2021.9</time>
+                        </header>
                         <p class="job-title">财富管理</p>
                         <div class="job-description">
-                            <ul>
+                            <ul class="job-list">
                                 <li>参与财富管理团队的宏观市场分析，协助制定资产配置策略，制作PPT材料向客户展示个性化投资方案</li>
                                 <li>运用Wind等金融终端进行行业研究与个股分析，支持产品推荐与组合构建</li>
                                 <li>协助撰写市场简报与投资建议报告，跟踪市场走势并提供定制化资产配置建议</li>
                                 <li>参加每周晨会与合规培训，系统学习证券行业相关法规与合规流程，掌握专业规范意识</li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </article>
+                </section>
+            </article>
 
-            <!-- Academic Activities -->
-            <div class="content-card">
-                <div class="content-section">
-                    <h2 class="section-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                        </svg>
+            <!-- 学术活动 -->
+            <article class="content-card" aria-labelledby="academic-heading">
+                <section class="content-section">
+                    <h2 id="academic-heading" class="section-header">
+                        <svg class="section-header-icon"><use href="#icon-award"/></svg>
                         学术活动
                     </h2>
 
-                    <div class="academic-item">
-                        <div class="academic-header">
+                    <article class="academic-item">
+                        <header class="academic-header">
                             <span class="academic-title">实物期权估值法在石油企业并购案中的应用</span>
-                            <span class="academic-date">2023.5 - 2023.6</span>
-                        </div>
+                            <time class="academic-date" datetime="2023-05/2023-06">2023.5 - 2023.6</time>
+                        </header>
                         <p class="academic-description">
                             针对石油公司投资特点和不确定性因素，以埃克森美孚（XOM）收购先锋自然资源公司（PXD）的潜在磋商为例，通过Black-Scholes期权定价模型推导构建实物期权估值模型和二叉树估值模型；进行蒙特卡洛模拟估值，通过1000次模拟提高置信区间；对模型变量进行敏感性分析；构建现金流折现模型DCF进行估值比较获得实证结果。
                         </p>
-                    </div>
+                    </article>
                     
-                    <div class="academic-item">
-                        <div class="academic-header">
+                    <article class="academic-item">
+                        <header class="academic-header">
                             <span class="academic-title">PwC 24小时商业挑战赛</span>
-                            <span class="academic-date">2021.4 - 2021.5</span>
-                        </div>
+                            <time class="academic-date" datetime="2021-04/2021-05">2021.4 - 2021.5</time>
+                        </header>
                         <p class="academic-description">
                             运用波特五力模型等分析商业选址和经营策略，对于亚洲各国市场零食消费行业深入研究，分析消费人群，运用金融和财务会计知识计算市场规模和经营成本，通过Excel预测未来现金流，计算自由现金流，通过折现现金流法DCF对零食市场和零食企业进行估值，完成商业分析。
                         </p>
-                    </div>
-                </div>
-            </div>
+                    </article>
+                </section>
+            </article>
 
-            <!-- Skills -->
-            <div class="content-card">
-                <div class="content-section">
-                    <h2 class="section-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                        </svg>
-                        Skills
+            <!-- 技能 -->
+            <article class="content-card" aria-labelledby="skills-main-heading">
+                <section class="content-section">
+                    <h2 id="skills-main-heading" class="section-header">
+                        <svg class="section-header-icon"><use href="#icon-settings"/></svg>
+                        专业技能
                     </h2>
                     <div class="skills-text">
                         <p>各类AI工具和Agent的重度使用者，大模型的配置调用，热衷探索新工具新硬件。</p>
                         <p>雅思7.5分，具备良好的英文商业能力，每日浏览X，Reddit等海外平台洞察科技动向。</p>
                         <p>熟练使用SQL、Python等语言进行数据处理与可视化分析，熟悉各类金融建模。</p>
                     </div>
-                </div>
-            </div>
+                </section>
+            </article>
         </main>
     </div>
 
-<style>
-    
-<script>
-  document.body.classList.add('dark');
-  const toggle = document.getElementById('darkToggle');
-  toggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark');
-    toggle.textContent = document.body.classList.contains('dark') ? 'dark' : 'light';
-  });
-</script>
+    <script>
+        // 主题切换功能
+        (function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+            const STORAGE_KEY = 'resume-theme-preference';
+            
+            // 检测系统偏好
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 初始化主题
+            function initTheme() {
+                // 优先使用localStorage保存的偏好，其次使用系统偏好，默认深色
+                const savedTheme = localStorage.getItem(STORAGE_KEY);
+                const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+                
+                if (isDark) {
+                    body.classList.add('dark');
+                } else {
+                    body.classList.remove('dark');
+                }
+                updateIcon(isDark);
+            }
+            
+            // 更新图标
+            function updateIcon(isDark) {
+                themeIcon.textContent = isDark ? '☀️' : '🌙';
+                themeToggle.setAttribute('aria-label', isDark ? '切换到浅色模式' : '切换到深色模式');
+            }
+            
+            // 切换主题
+            function toggleTheme() {
+                const isDark = body.classList.toggle('dark');
+                localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
+                updateIcon(isDark);
+            }
+            
+            // 事件监听
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // 监听系统主题变化
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // 只有用户没有手动设置过偏好时才自动切换
+                if (!localStorage.getItem(STORAGE_KEY)) {
+                    if (e.matches) {
+                        body.classList.add('dark');
+                        updateIcon(true);
+                    } else {
+                        body.classList.remove('dark');
+                        updateIcon(false);
+                    }
+                }
+            });
+            
+            // 初始化
+            initTheme();
+        })();
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
-
-.inland-security-footer {
-  position: fixed;
-  z-index: 10;
-  bottom: 0;
-  right: 0;
-  width: fit-content;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.tooltip-container {
-  position: relative;
-}
-
-.trigger-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  background-color: transparent;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.minimax-link {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-weight: 300;
-  color: #adadad;
-  text-decoration: none;
-}
-
-.minimax-link:visited {
-  color: #adadad;
-}
-
-.minimax-link:hover {
-  color: #666666;
-}
-
-.tooltip-content {
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  padding-bottom: 16px; /* 8px 内容间距 + 8px 用于鼠标移动的透明区域 */
-  font-size: 12px;
-  line-height: 17px;
-  background-color: #fafafa;
-  border-radius: 12px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  color: #171717;
-}
-
-/* 创建透明的连接区域，让鼠标可以平滑移动到 tooltip */
-.tooltip-content::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  right: 0;
-  height: 16px;
-}
-
-.tooltip-container:hover .tooltip-content {
-  display: flex;
-}
-
-.info-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.beian-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #171717;
-}
-
-.beian-icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 2px;
-}
-
-.underline-text {
-  color: #171717;
-  text-decoration: underline;
-}
-
-.underline-text:hover {
-  color: #000000;
-}
-
-/* 深色模式支持 */
-@media (prefers-color-scheme: dark) {
-  .trigger-content {
-    background-color: transparent;
-  }
-
-  .minimax-link,
-  .minimax-link:visited {
-    color: #666666;
-  }
-
-  .minimax-link:hover {
-    color: #adadad;
-  }
-
-  .tooltip-content {
-    background-color: #262626;
-    color: #ededed;
-  }
-
-  .beian-link,
-  .underline-text {
-    color: #ededed;
-  }
-
-  .underline-text:hover {
-    color: #ffffff;
-  }
-}
-
+        // 图片懒加载错误处理增强
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            img.addEventListener('error', function() {
+                // 如果提供了onerror内联处理，不重复执行
+                if (this.getAttribute('onerror')) return;
+                
+                console.warn('图片加载失败:', this.src);
+                // 添加备用样式或隐藏
+                this.style.opacity = '0.5';
+            });
+        });
+    </script>
+</body>
+</html>
