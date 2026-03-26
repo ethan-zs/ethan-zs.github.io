@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王子石 - 简历</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-primary: #1e3a5f;
+            --text-secondary: #4a6fa5;
+            --accent-blue: #0969da;
+            --border-color: #d0d7de;
+            --sidebar-bg: #1e3a5f;
+            --progress-bg: #e1e4e8;
+            --sidebar-text: #ffffff;
+            --sidebar-text-muted: #a8c5e2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--sidebar-bg);
+            border-radius: 6px;
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #3d7ab9;
+            object-fit: cover;
+            margin-bottom: 16px;
+        }
+
+        .profile-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--sidebar-text);
+            margin-bottom: 8px;
+        }
+
+        .role {
+            display: none;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--sidebar-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title svg {
+            width: 18px;
+            height: 18px;
+            color: var(--sidebar-text-muted);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--sidebar-text-muted);
+        }
+
+        .contact-list svg {
+            width: 16px;
+            height: 16px;
+            color: var(--sidebar-text-muted);
+            flex-shrink: 0;
+        }
+
+        .contact-list a {
+            color: #7cb3e0;
+            text-decoration: none;
+        }
+
+        .contact-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar Education */
+        .sidebar-education {
+            color: var(--sidebar-text-muted);
+        }
+
+        .sidebar-edu-item {
+            margin-bottom: 16px;
+        }
+
+        .sidebar-edu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-school {
+            font-weight: 600;
+            color: var(--sidebar-text);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-degree {
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-date {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* Tech Stack Tags */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #2a4a6f;
+            color: #a8c5e2;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* WeChat QR */
+        .wechat-section {
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid #3d5a80;
+        }
+
+        .wechat-section .section-title {
+            justify-content: center;
+        }
+
+        .qr-code {
+            width: 140px;
+            height: 140px;
+            border-radius: 8px;
+            border: 2px solid #3d7ab9;
+            object-fit: cover;
+        }
+
+        .qr-label {
+            display: none;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 24px;
+        }
+
+        .content-section {
+            margin-bottom: 28px;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 20px;
+        }
+
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .school-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .education-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .degree {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        /* Experience Timeline */
+        .timeline-item {
+            margin-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .company-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .timeline-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .job-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .job-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .job-description ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .job-description li {
+            margin-bottom: 6px;
+        }
+
+        /* Academic Activities */
+        .academic-item {
+            margin-bottom: 20px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .academic-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .academic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .academic-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .academic-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .academic-description {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Skills Description */
+        .skills-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .skills-text p {
+            margin-bottom: 12px;
+        }
+
+        .skills-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
+            .content-card, .sidebar {
+                padding: 16px;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+            }
+
+            .education-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-header">
+                <img src="https://cdn.hailuoai.com/matrix_agent/20260313/image_tool/output/105911_becd/workspace/imgs/nft_ape_avatar.png" alt="头像" class="avatar">
+                <h1>王子石</h1>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="section">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    联系方式
+                </h3>
+                <ul class="contact-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        <span>19945735419</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <a href="mailto:easonzswang@163.com">easonzswang@163.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sidebar Education -->
+            <div class="section">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                    教育背景
+                </h3>
+                <div class="sidebar-education">
+                    <div class="sidebar-edu-item">
+                        <div class="sidebar-school">加州大学圣地亚哥分校</div>
+                        <div class="sidebar-degree">量化金融 · 硕士</div>
+                        <div class="sidebar-date">2024 - 2026</div>
+                    </div>
+                    <div class="sidebar-edu-item">
+                        <div class="sidebar-school">上海财经大学</div>
+                        <div class="sidebar-degree">国际金融 · 本科</div>
+                        <div class="sidebar-date">2020 - 2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="section">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                    技术栈
+                </h3>
+                <div class="tech-tags">
+                    <span class="tech-tag">AI</span>
+                    <span class="tech-tag">Agent</span>
+                    <span class="tech-tag">消费电子</span>
+                    <span class="tech-tag">Robotics</span>
+                    <span class="tech-tag">创客活动</span>
+                    <span class="tech-tag">财务分析</span>
+                    <span class="tech-tag">SQL</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">金融建模</span>
+                </div>
+            </div>
+
+            <!-- WeChat QR -->
+            <div class="wechat-section">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    添加微信
+                </h3>
+                <img src="https://cdn.hailuoai.com/matrix_agent/20260313/image_tool/output/110018_2659/workspace/imgs/wechat_qr_cropped.png" alt="微信二维码" class="qr-code">
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Education (Main Content) -->
+            <div class="content-card">
+                <div class="content-section">
+                    <h2 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                        教育背景
+                    </h2>
+                    <div class="education-item">
+                        <div class="education-header">
+                            <span class="school-name">加州大学圣地亚哥分校 (UCSD)</span>
+                            <span class="education-date">2024 - 2026</span>
+                        </div>
+                        <p class="degree">量化金融 · 硕士</p>
+                    </div>
+                    <div class="education-item">
+                        <div class="education-header">
+                            <span class="school-name">上海财经大学</span>
+                            <span class="education-date">2020 - 2024</span>
+                        </div>
+                        <p class="degree">国际金融 · 本科</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="content-card">
+                <div class="content-section">
+                    <h2 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        工作经历
+                    </h2>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="company-name">今日资本</span>
+                            <span class="timeline-date">2026.3 - 至今</span>
+                        </div>
+                        <p class="job-title">投资分析师</p>
+                        <div class="job-description">
+                            <ul>
+                                <li>参与投资分析工作，负责项目尽职调查与评估</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="company-name">美团</span>
+                            <span class="timeline-date">2024.3 - 2024.7</span>
+                        </div>
+                        <p class="job-title">产品经理</p>
+                        <div class="job-description">
+                            <ul>
+                                <li>利用SQL与数据建模技术，搭建并优化公司金融贷款业务的用户数据资产，支持风险识别与用户画像建设</li>
+                                <li>分析7亿年活用户中的不同用户群体，识别高学历、高收入等优质用户，推动优质客群识别覆盖率从43%提升至50%</li>
+                                <li>参与金融风险建模与KYC数据探索，识别影响用户还款能力和意愿的关键因素，如APP安装行为、手机号更换、突发支出</li>
+                                <li>构建用户逾期分类模型，根据还款能力与意愿将用户分层，支持催收策略优化，降低催收成本</li>
+                                <li>深入研究逾期用户案例，通过数据与业务结合方式识别潜在催收"做功点"，提升催回率与用户体验</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="company-name">红杉中国</span>
+                            <span class="timeline-date">2023.9 - 2024.2</span>
+                        </div>
+                        <p class="job-title">投后管理</p>
+                        <div class="job-description">
+                            <ul>
+                                <li>参与宏观产业政策研究，调研孵化器行业发展趋势与商业模式，撰写投资分析报告及孵化器增长战略建议</li>
+                                <li>分析头部孵化器的运营模式与增长路径，支持团队制定孵化平台的战略方向与投后管理机制</li>
+                                <li>负责红杉上海孵化器的投后管理事务，协助初创企业申请地方产业补贴政策、对接政府落地资源</li>
+                                <li>参与路演活动、创业比赛与初创企业筛选流程，审查项目团队背景、商业模式与财务数据，评估其投资与发展潜力</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="company-name">华夏基金</span>
+                            <span class="timeline-date">2022.6 - 2022.9</span>
+                        </div>
+                        <p class="job-title">渠道销售</p>
+                        <div class="job-description">
+                            <ul>
+                                <li>协助维护与银行、券商等机构渠道的合作关系，支持日常对接与业务流程顺畅执行</li>
+                                <li>运用金融终端进行数据提取与处理，编制净值日报、收益表现报告，为销售与投资决策提供实时数据支持</li>
+                                <li>参与代销渠道产品准入流程材料准备，包括产品评估表、尽调文件与渠道说明文档</li>
+                                <li>为渠道客户提供基金投资咨询服务，协助匹配产品策略，应用金融模型进行配置建议与绩效跟踪</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <span class="company-name">华泰证券</span>
+                            <span class="timeline-date">2021.6 - 2021.9</span>
+                        </div>
+                        <p class="job-title">财富管理</p>
+                        <div class="job-description">
+                            <ul>
+                                <li>参与财富管理团队的宏观市场分析，协助制定资产配置策略，制作PPT材料向客户展示个性化投资方案</li>
+                                <li>运用Wind等金融终端进行行业研究与个股分析，支持产品推荐与组合构建</li>
+                                <li>协助撰写市场简报与投资建议报告，跟踪市场走势并提供定制化资产配置建议</li>
+                                <li>参加每周晨会与合规培训，系统学习证券行业相关法规与合规流程，掌握专业规范意识</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Activities -->
+            <div class="content-card">
+                <div class="content-section">
+                    <h2 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        学术活动
+                    </h2>
+
+                    <div class="academic-item">
+                        <div class="academic-header">
+                            <span class="academic-title">实物期权估值法在石油企业并购案中的应用</span>
+                            <span class="academic-date">2023.5 - 2023.6</span>
+                        </div>
+                        <p class="academic-description">
+                            针对石油公司投资特点和不确定性因素，以埃克森美孚（XOM）收购先锋自然资源公司（PXD）的潜在磋商为例，通过Black-Scholes期权定价模型推导构建实物期权估值模型和二叉树估值模型；进行蒙特卡洛模拟估值，通过1000次模拟提高置信区间；对模型变量进行敏感性分析；构建现金流折现模型DCF进行估值比较获得实证结果。
+                        </p>
+                    </div>
+                    
+                    <div class="academic-item">
+                        <div class="academic-header">
+                            <span class="academic-title">PwC 24小时商业挑战赛</span>
+                            <span class="academic-date">2021.4 - 2021.5</span>
+                        </div>
+                        <p class="academic-description">
+                            运用波特五力模型等分析商业选址和经营策略，对于亚洲各国市场零食消费行业深入研究，分析消费人群，运用金融和财务会计知识计算市场规模和经营成本，通过Excel预测未来现金流，计算自由现金流，通过折现现金流法DCF对零食市场和零食企业进行估值，完成商业分析。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="content-card">
+                <div class="content-section">
+                    <h2 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                        Skills
+                    </h2>
+                    <div class="skills-text">
+                        <p>各类AI工具和Agent的重度使用者，熟练大模型API的配置及调用，热衷探索新工具新硬件。</p>
+                        <p>雅思7.5分，具备良好的英文商业能力，每日浏览X，Reddit等海外平台洞察科技动向。</p>
+                        <p>熟练使用SQL、Python等语言进行数据处理与可视化分析，熟悉各类金融建模。</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.inland-security-footer {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+  width: fit-content;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tooltip-container {
+  position: relative;
+}
+
+.trigger-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.minimax-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 300;
+  color: #adadad;
+  text-decoration: none;
+}
+
+.minimax-link:visited {
+  color: #adadad;
+}
+
+.minimax-link:hover {
+  color: #666666;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  padding-bottom: 16px; /* 8px 内容间距 + 8px 用于鼠标移动的透明区域 */
+  font-size: 12px;
+  line-height: 17px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: #171717;
+}
+
+/* 创建透明的连接区域，让鼠标可以平滑移动到 tooltip */
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.tooltip-container:hover .tooltip-content {
+  display: flex;
+}
+
+.info-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.beian-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #171717;
+}
+
+.beian-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+
+.underline-text {
+  color: #171717;
+  text-decoration: underline;
+}
+
+.underline-text:hover {
+  color: #000000;
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .trigger-content {
+    background-color: transparent;
+  }
+
+  .minimax-link,
+  .minimax-link:visited {
+    color: #666666;
+  }
+
+  .minimax-link:hover {
+    color: #adadad;
+  }
+
+  .tooltip-content {
+    background-color: #262626;
+    color: #ededed;
+  }
+
+  .beian-link,
+  .underline-text {
+    color: #ededed;
+  }
+
+  .underline-text:hover {
+    color: #ffffff;
+  }
+}
+
